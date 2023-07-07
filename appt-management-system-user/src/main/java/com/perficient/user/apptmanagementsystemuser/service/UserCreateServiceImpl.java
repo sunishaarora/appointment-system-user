@@ -1,5 +1,6 @@
 package com.perficient.user.apptmanagementsystemuser.service;
 
+import com.perficient.user.apptmanagementsystemuser.controller.DuplicateEmailException;
 import com.perficient.user.apptmanagementsystemuser.entity.UserEntity;
 import com.perficient.user.apptmanagementsystemuser.model.User;
 import com.perficient.user.apptmanagementsystemuser.repository.UserRepository;
@@ -17,6 +18,9 @@ public class UserCreateServiceImpl implements UserCreateService{
 
     @Override
     public User createUser(User user) {
+        if(userRepository.existsByEmailAddresses(user.getEmailAddresses())){
+            throw new DuplicateEmailException("Email address already exists: " + user.getEmailAddresses());
+        }
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
         UserEntity savedUserEntity = userRepository.save(userEntity);
