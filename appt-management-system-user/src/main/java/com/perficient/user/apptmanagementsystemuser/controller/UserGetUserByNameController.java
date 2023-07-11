@@ -19,7 +19,7 @@ public class UserGetUserByNameController {
     }
 
     @GetMapping("/user/search/{firstName}/{lastName}")
-    private ResponseEntity<List<User>> getUserByName(@PathVariable String firstName, @PathVariable String lastName){
+    private ResponseEntity<List<User>> searchUserByName(@PathVariable String firstName, @PathVariable String lastName){
         List<User> userList = userGetUserByNameService.searchUserByName(firstName, lastName);
         if(userList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
