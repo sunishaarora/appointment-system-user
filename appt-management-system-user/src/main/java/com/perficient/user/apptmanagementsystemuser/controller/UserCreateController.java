@@ -18,14 +18,19 @@ public class UserCreateController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        User savedUser = userCreateService.createUser(user);
-        return ResponseEntity.ok(savedUser);
+    public ResponseEntity<?> createUser(@RequestBody User user){
+        try{
+            User savedUser = userCreateService.createUser(user);
+            return ResponseEntity.ok(savedUser);
+        }catch(DuplicateEmailException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Email ID already exists, could not create user");
+        }
+
     }
 
-    @ExceptionHandler(DuplicateEmailException.class)
-    public ResponseEntity<String> handleDuplicateEmailException(DuplicateEmailException ex){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-    }
+//    @ExceptionHandler(DuplicateEmailException.class)
+//    public ResponseEntity<String> handleDuplicateEmailException(DuplicateEmailException ex){
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+//    }
 
 }

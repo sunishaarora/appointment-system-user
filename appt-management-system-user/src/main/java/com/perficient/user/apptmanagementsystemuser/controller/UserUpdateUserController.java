@@ -3,8 +3,11 @@ package com.perficient.user.apptmanagementsystemuser.controller;
 import com.perficient.user.apptmanagementsystemuser.entity.UserEntity;
 import com.perficient.user.apptmanagementsystemuser.model.User;
 import com.perficient.user.apptmanagementsystemuser.service.UserUpdateUserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/v1/")
@@ -15,8 +18,13 @@ public class UserUpdateUserController {
         this.userUpdateUserService = userUpdateUserService;
     }
     @PutMapping("/updateUser/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user){
-        user = userUpdateUserService.updateUser(userId, user);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user) {
+        try {
+            user = userUpdateUserService.updateUser(userId, user);
+            return ResponseEntity.ok(user);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Existing user not found");
+        }
     }
+
 }

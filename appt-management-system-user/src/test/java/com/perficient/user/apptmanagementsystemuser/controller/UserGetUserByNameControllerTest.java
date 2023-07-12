@@ -40,7 +40,7 @@ class UserGetUserByNameControllerTest {
         user1.setLastName(lastName);
         userList.add(user1);
         when(userGetUserByNameService.searchUserByName(firstName, lastName)).thenReturn(userList);
-        ResponseEntity<List<User>> response = userGetUserByNameController.searchUserByName(firstName, lastName);
+        ResponseEntity<?> response = userGetUserByNameController.searchUserByName(firstName, lastName);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(userList, response.getBody());
     }
@@ -49,7 +49,7 @@ class UserGetUserByNameControllerTest {
         String firstName = "John";
         String lastName = "Doe";
         when(userGetUserByNameService.searchUserByName(firstName, lastName)).thenReturn(new ArrayList<>());
-        ResponseEntity<List<User>> response = userGetUserByNameController.searchUserByName(firstName, lastName);
+        ResponseEntity<?> response = userGetUserByNameController.searchUserByName(firstName, lastName);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 

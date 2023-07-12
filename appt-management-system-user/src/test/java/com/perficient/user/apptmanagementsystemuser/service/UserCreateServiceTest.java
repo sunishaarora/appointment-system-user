@@ -30,7 +30,7 @@ class UserCreateServiceTest {
     void createUser_ValidUser_ReturnsOkResponse(){
         User user = new User();
         when(userCreateService.createUser(user)).thenReturn(user);
-        ResponseEntity<User> response = userCreateController.createUser(user);
+        ResponseEntity<?> response = userCreateController.createUser(user);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(user, response.getBody());

@@ -33,7 +33,7 @@ class UserUpdateUserControllerTest {
         User user = new User();
 
         when(userUpdateUserService.updateUser(userId, user)).thenReturn(user);
-        ResponseEntity<User> response = userUpdateUserController.updateUser(userId, user);
+        ResponseEntity<?> response = userUpdateUserController.updateUser(userId, user);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(user, response.getBody());
     }
