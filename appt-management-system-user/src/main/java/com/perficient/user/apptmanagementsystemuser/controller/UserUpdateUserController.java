@@ -23,7 +23,7 @@ public class UserUpdateUserController {
             user = userUpdateUserService.updateUser(userId, user);
             return ResponseEntity.ok(user);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Existing user not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + userId);
         }
     }
 

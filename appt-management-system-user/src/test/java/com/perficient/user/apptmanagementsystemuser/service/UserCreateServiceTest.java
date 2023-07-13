@@ -12,14 +12,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserCreateServiceTest {
     private UserCreateController userCreateController;
     @Mock
     private UserCreateService userCreateService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -27,7 +30,7 @@ class UserCreateServiceTest {
     }
 
     @Test
-    void createUser_ValidUser_ReturnsOkResponse(){
+    void createUser_ValidUser_ReturnsOkResponse() {
         User user = new User();
         when(userCreateService.createUser(user)).thenReturn(user);
         ResponseEntity<?> response = userCreateController.createUser(user);
@@ -38,12 +41,13 @@ class UserCreateServiceTest {
 
     @Test
     void handleDuplicateEmailException_ValidException_ReturnsConflictResponse() {
-        DuplicateEmailException exception = new DuplicateEmailException("Email address already exists");
-        String expectedMessage = "Email address already exists";
-
-        ResponseEntity<String> response = userCreateController.handleDuplicateEmailException(exception);
-
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals(expectedMessage, response.getBody());
+        String duplicateEmail = "test@example.com";
+        User user = new User();
+        user.setEmailAddresses(duplicateEmail);
+        when(userCreateService.createUser(user)).thenThrow(DuplicateEmailException.class);
+        ResponseEntity<?> response = userCreateController.createUser(user);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals("Email ID already exists, could not create user", response.getBody());
     }
+
 }

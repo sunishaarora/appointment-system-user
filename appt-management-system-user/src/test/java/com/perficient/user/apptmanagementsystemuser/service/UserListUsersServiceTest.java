@@ -36,7 +36,7 @@ class UserListUsersServiceTest {
 
         when(userListUsersService.getAllUsers()).thenReturn(expectedUsers);
 
-        ResponseEntity<List<User>> response = userListUsersController.getAllUsers();
+        ResponseEntity<?> response = userListUsersController.getAllUsers();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedUsers, response.getBody());
@@ -44,11 +44,9 @@ class UserListUsersServiceTest {
 
     @Test
     void handleEmptyListException_ValidException_ReturnsNoContentResponse() {
-        EmptyListException exception = new EmptyListException("User list is empty");
-
-        ResponseEntity<String> response = userListUsersController.handleEmptyListException(exception);
-
+        when(userListUsersService.getAllUsers()).thenThrow(new EmptyListException("No existing users"));
+        ResponseEntity<?> response = userListUsersController.getAllUsers();
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        assertEquals("User list is empty", response.getBody());
+        assertEquals("No existing users", response.getBody());
     }
 }
