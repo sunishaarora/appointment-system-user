@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,9 +49,13 @@ class UserGetUserByNameControllerTest {
     void getUserByName_UserNotFound(){
         String firstName = "John";
         String lastName = "Doe";
-        when(userGetUserByNameService.searchUserByName(firstName, lastName)).thenReturn(new ArrayList<>());
+        when(userGetUserByNameService.searchUserByName(firstName, lastName)).thenThrow(new NoSuchElementException("No existing user found"));
+
         ResponseEntity<?> response = userGetUserByNameController.searchUserByName(firstName, lastName);
+
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("No existing user found", response.getBody());
     }
+
 
 }

@@ -71,14 +71,14 @@ class UserCreateControllerTest {
         user.setAge(25);
         user.setPhoneNumbers("123-456-7890");
 
-        when(userCreateService.createUser(user)).thenThrow(new DuplicateEmailException("Duplicate email"));
+        when(userCreateService.createUser(user)).thenThrow(new DuplicateEmailException("Email ID already exists, could not create user"));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"emailAddresses\":\"john.doe@example.com\",\"gender\":\"Male\",\"age\":25,\"phoneNumbers\":\"123-456-7890\"}"))
                 .andExpect(status().isConflict())
-                .andExpect(content().string("Duplicate email"));
+                .andExpect(content().string("Email ID already exists, could not create user"));
 
         verify(userCreateService).createUser(user);
     }

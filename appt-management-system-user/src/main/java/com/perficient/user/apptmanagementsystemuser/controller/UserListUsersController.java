@@ -17,14 +17,13 @@ public class UserListUsersController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> userList = userListUsersService.getAllUsers();
-        return ResponseEntity.ok(userList);
-    }
+    public ResponseEntity<?> getAllUsers() {
+        try{
+            List<User> userList = userListUsersService.getAllUsers();
+            return ResponseEntity.ok(userList);
+        }catch (EmptyListException ex){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No existing users");
+        }
 
-    @ExceptionHandler(EmptyListException.class)
-    public ResponseEntity<String> handleEmptyListException(EmptyListException ex) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
     }
-
 }

@@ -35,18 +35,21 @@ class UserListUsersControllerTest {
     void ListUsers_Success(){
         List<User> userList = new ArrayList<>();
         when(userListUsersService.getAllUsers()).thenReturn(userList);
-        ResponseEntity<List<User>> response = userListUsersController.getAllUsers();
+        ResponseEntity<?> response = userListUsersController.getAllUsers();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(userList, response.getBody());
     }
 
     @Test
-    void ListUsers_EmptyListException(){
-        String errorMessage = "No users found";
-        EmptyListException exception = new EmptyListException(errorMessage);
-        ResponseEntity<String> response = userListUsersController.handleEmptyListException(exception);
+    void listUsers_EmptyListException(){
+        String errorMessage = "No existing users";
+        when(userListUsersService.getAllUsers()).thenThrow(new EmptyListException(errorMessage));
+
+        ResponseEntity<?> response = userListUsersController.getAllUsers();
+
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         assertEquals(errorMessage, response.getBody());
     }
+
 }

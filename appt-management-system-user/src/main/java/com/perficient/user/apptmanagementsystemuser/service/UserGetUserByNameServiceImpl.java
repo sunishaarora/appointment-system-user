@@ -21,7 +21,7 @@ public class UserGetUserByNameServiceImpl implements UserGetUserByNameService{
     public List<User> searchUserByName(String firstName, String lastName) {
         List<UserEntity> userEntities = userRepository.findByFirstNameAndLastName(firstName, lastName);
         if(userEntities.isEmpty()){
-            throw new NoSuchElementException("User not found");
+            throw new NoSuchElementException("No existing user found");
         }else{
             List<User> users =userEntities
                     .stream()

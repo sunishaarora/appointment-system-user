@@ -22,7 +22,7 @@ public class UserListUsersServiceImpl implements UserListUsersService{
     public List<User> getAllUsers() {
         List<UserEntity> userEntities = userRepository.findAll();
         if (userEntities.isEmpty()) {
-            throw new EmptyListException("User list is empty");
+            throw new EmptyListException("No existing users");
         }
         List<User> users = userEntities
                 .stream()

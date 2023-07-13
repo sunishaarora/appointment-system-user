@@ -23,14 +23,9 @@ public class UserCreateController {
             User savedUser = userCreateService.createUser(user);
             return ResponseEntity.ok(savedUser);
         }catch(DuplicateEmailException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Email ID already exists, could not create user");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email ID already exists, could not create user");
         }
 
     }
-
-//    @ExceptionHandler(DuplicateEmailException.class)
-//    public ResponseEntity<String> handleDuplicateEmailException(DuplicateEmailException ex){
-//        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-//    }
 
 }
