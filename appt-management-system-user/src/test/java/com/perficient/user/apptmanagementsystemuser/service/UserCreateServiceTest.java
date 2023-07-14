@@ -46,7 +46,7 @@ class UserCreateServiceTest {
         user.setEmailAddresses(duplicateEmail);
         when(userCreateService.createUser(user)).thenThrow(DuplicateEmailException.class);
         ResponseEntity<?> response = userCreateController.createUser(user);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         assertEquals("Email ID already exists, could not create user", response.getBody());
     }
 

@@ -3,13 +3,11 @@ package com.perficient.user.apptmanagementsystemuser.controller;
 import com.perficient.user.apptmanagementsystemuser.service.UserDeleteService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/")
+@CrossOrigin(origins= "http://localhost:3000")
 public class UserDeleteController {
     private final UserDeleteService userDeleteService;
 

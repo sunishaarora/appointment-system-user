@@ -11,6 +11,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("api/v1/")
+@CrossOrigin(origins= "http://localhost:3000")
 public class UserCreateController {
     private final UserCreateService userCreateService;
     public UserCreateController(UserCreateService userCreateService) {
