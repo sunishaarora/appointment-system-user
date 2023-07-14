@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/v1/")
+@CrossOrigin(origins= "http://localhost:3000")
 public class UserUpdateUserController {
     private UserUpdateUserService userUpdateUserService;
 
