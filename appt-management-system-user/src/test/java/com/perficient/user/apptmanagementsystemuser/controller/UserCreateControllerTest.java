@@ -55,7 +55,7 @@ class UserCreateControllerTest {
                         .post("/api/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"emailAddresses\":\"john.doe@example.com\",\"gender\":\"Male\",\"age\":25,\"phoneNumbers\":\"123-456-7890\"}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(user.getLastName()))
                 .andExpect(jsonPath("$.emailAddresses").value(user.getEmailAddresses()))

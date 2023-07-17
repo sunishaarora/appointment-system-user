@@ -24,7 +24,7 @@ public class UserCreateServiceImpl implements UserCreateService{
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
         UserEntity savedUserEntity = userRepository.save(userEntity);
-        userEntity.setUserId(savedUserEntity.getUserId());
+        user.setUserId(savedUserEntity.getUserId());
         return user;
     }
 
