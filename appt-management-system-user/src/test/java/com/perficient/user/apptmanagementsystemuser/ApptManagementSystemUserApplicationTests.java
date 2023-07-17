@@ -6,5 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ApptManagementSystemUserApplicationTests {
 
+    @Test
+    void contextLoads(){
 
+    }
 }
