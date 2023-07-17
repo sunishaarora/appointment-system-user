@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.Objects;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {

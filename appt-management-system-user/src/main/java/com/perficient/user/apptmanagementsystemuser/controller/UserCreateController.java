@@ -22,7 +22,7 @@ public class UserCreateController {
     public ResponseEntity<?> createUser(@RequestBody User user){
         try{
             User savedUser = userCreateService.createUser(user);
-            return ResponseEntity.ok(savedUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
         }catch(DuplicateEmailException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email ID already exists, could not create user");
         }
