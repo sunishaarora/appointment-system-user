@@ -20,6 +20,21 @@ public class UserGetUserByNameController {
         this.userGetUserByNameService = userGetUserByNameService;
     }
 
+    //Feedback: Avoid verbs in URL, like don't need search here
+    //Should be plural (users)
+    //GET /users
+    //GET /users/{id}
+    //POST /users
+    //PUT /users
+    //PATCH /users --Update one field (what if change to null?-handles this case)
+    //DELETE /users/{id}
+    //Search should return empty list instead of 404
+    //%FirstName% - Use query parameters for filter (Not path variable) - Like amazon
+    //Search by different parameters
+    //Other things to potentially add: Pagination/Sorting
+    //GET /customers/{c_id}/orders/{o_id} (Good use of Path variables)
+    //GET /orders?c_id=
+
     @GetMapping("/user/search/{firstName}/{lastName}")
     public ResponseEntity<?> searchUserByName(@PathVariable String firstName, @PathVariable String lastName){
         try{
